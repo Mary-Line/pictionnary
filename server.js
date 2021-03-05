@@ -17,7 +17,7 @@ const io = socketIO(server);
 let users = [];
 let currentPlayer = null;
 let timeout = null;
-const words = ['ert', 'azer', 'bonjour']
+const words = ['fleur', 'poule', 'arbre', 'poussin']
 io.on("connection", (socket) => {
     socket.on("username", (username)=>{
         console.log(`${username} joined the game.`)
@@ -34,6 +34,9 @@ io.on("connection", (socket) => {
             return user !== socket;
         });
         sendUsers();
+        if(users.length === 0){
+            timeout = clearTimeout(timeout);
+        }
     });
     socket.on("line", (data)=>{
         socket.broadcast.emit("line", data);
